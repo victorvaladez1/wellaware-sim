@@ -1,5 +1,7 @@
 import random
 import datetime
+import json
+import os
 
 def generate_sensor_reading(well_id):
     return {
@@ -11,8 +13,7 @@ def generate_sensor_reading(well_id):
     }
 
 def get_all_wells():
-    return [
-        {"id": 1, "name": "Well Alpha", "location": "West Texas"},
-        {"id": 2, "name": "Well Bravo", "location": "East Texas"},
-        {"id": 3, "name": "Well Charlie", "location": "New Mexico"},
-    ]
+    json_path = os.path.join(os.path.dirname(__file__), 'wells.json')
+    with open(json_path, 'r') as file:
+        wells = json.load(file)
+    return wells

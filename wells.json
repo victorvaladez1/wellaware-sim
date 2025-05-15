@@ -1,0 +1,6 @@
+[
+    { "id": 1, "name": "Well Alpha", "location": "West Texas" },
+    { "id": 2, "name": "Well Bravo", "location": "East Texas" },
+    { "id": 3, "name": "Well Charlie", "location": "New Mexico" }
+]
+  
