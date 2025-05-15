@@ -23,3 +23,15 @@ def readings():
         
     readings = [generate_sensor_reading(w["id"]) for w in wells]
     return jsonify(readings)
+
+@routes.route("/api/alerts", methods=["GET"])
+def alerts():
+    wells = get_all_wells()
+    alerts = []
+
+    for well in wells:
+        reading = generate_sensor_reading(well["id"])
+        if reading["status"] != ["NORMAL"]:
+            alerts.append(reading)
+
+    return jsonify(alerts)
