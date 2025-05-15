@@ -64,4 +64,34 @@ def alert_log():
 
     return jsonify(data)
 
+@routes.route("/api/wells", methods=["POST"])
+def add_well():
+    json_path = os.path.join(os.path.dirname(__file__), 'wells.json')
+
+    # Load existing wells
+    with open(json_path, 'r') as file:
+        wells = json.load(file)
+
+    # Get data from request
+    data = request.get_json()
+    name = data.get("name")
+    location = data.get("location")
+
+    if not name or not location:
+        return jsonify({"error": "Missing name or location"}), 400
+
+    # Assign new ID
+    next_id = max(well["id"] for well in wells) + 1 if wells else 1
+    new_well = {
+        "id": next_id,
+        "name": name,
+        "location": location
+    }
+
+    # Add and save
+    wells.append(new_well)
+    with open(json_path, 'w') as file:
+        json.dump(wells, file, indent=2)
+
+    return jsonify(new_well), 201
 
