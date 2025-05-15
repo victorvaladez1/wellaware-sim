@@ -1,6 +1,9 @@
 from flask import Blueprint, jsonify, request
 from .generator import get_all_wells, generate_sensor_reading
 
+import os
+import json
+
 routes = Blueprint("routes", __name__)
 
 @routes.route("/api/wells", methods=["GET"])
@@ -24,6 +27,9 @@ def readings():
     readings = [generate_sensor_reading(w["id"]) for w in wells]
     return jsonify(readings)
 
+import os
+import json
+
 @routes.route("/api/alerts", methods=["GET"])
 def alerts():
     wells = get_all_wells()
@@ -34,4 +40,15 @@ def alerts():
         if reading["status"] != ["NORMAL"]:
             alerts.append(reading)
 
+    if alerts:
+        json_path = os.path.join(os.path.dirname(__file__), 'alerts.json')
+        with open(json_path, 'r') as f:
+            existing = json.load(f)
+
+        existing.extend(alerts)
+
+        with open(json_path, 'w') as f:
+            json.dump(existing, f, indent=2)
+
     return jsonify(alerts)
+
