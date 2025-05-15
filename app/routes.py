@@ -114,3 +114,14 @@ def delete_well(well_id):
         json.dump(updated_wells, file, indent=2)
 
     return jsonify({"message": f"Well with id {well_id} deleted"}), 200
+
+@routes.route("/api/alerts", methods=["DELETE"])
+def clear_alerts():
+    json_path = os.path.join(os.path.dirname(__file__), 'alerts.json')
+
+    # Overwrite with empty list
+    with open(json_path, 'w') as file:
+        json.dump([], file, indent=2)
+
+    return jsonify({"message": "All alerts cleared"}), 200
+
