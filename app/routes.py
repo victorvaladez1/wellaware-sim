@@ -52,3 +52,16 @@ def alerts():
 
     return jsonify(alerts)
 
+@routes.route("/api/alert-log", methods=["GET"])
+def alert_log():
+    json_path = os.path.join(os.path.dirname(__file__), 'alerts.json')
+    
+    if not os.path.exists(json_path):
+        return jsonify({"error": "alerts.json not found"}), 404
+
+    with open(json_path, 'r') as f:
+        data = json.load(f)
+
+    return jsonify(data)
+
+
