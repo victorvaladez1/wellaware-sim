@@ -1,8 +1,8 @@
 # 🛢️ WellAwareSim
 
-**WellAwareSim** is a backend-only Flask API that simulates live oilfield hardware — including oil wells, sensor data, and real-time alert generation — to serve as a mock data feed for frontend dashboards or full-stack OilTech applications.
+**WellAwareSim** is a backend-only Flask API that simulates oilfield hardware — including oil wells, real-time sensor readings, and fault conditions — to serve as a mock data feed for external applications like dashboards or full-stack OilTech platforms.
 
-This project is designed to mimic real-world oilfield monitoring systems using dynamically generated sensor readings, anomaly detection, and persistent alert logging.
+This project mimics real-world industrial equipment behavior and supports CRUD operations for wells, real-time anomaly detection, and alert logging.
 
 ---
 
@@ -11,40 +11,57 @@ This project is designed to mimic real-world oilfield monitoring systems using d
 - **Python 3.9+**
 - **Flask** (REST API)
 - **JSON files** as mock storage
-- No frontend — backend-only for simulating oil equipment data
+- No frontend — this API acts as a simulated external system
 
 ---
 
-## 🚀 Features Implemented
+## 🚀 API Endpoints
 
-### ✅ `GET /api/wells`
-Returns a list of oil wells being simulated.
+### 🛢️ Wells
 
-- Wells are stored in `wells.json`
-- Each has an ID, name, and location
+- `GET /api/wells`  
+  Returns a list of all simulated oil wells.
 
-### ✅ `GET /api/readings`
-Returns live simulated sensor readings for all wells.
+- `POST /api/wells`  
+  Adds a new well. Expects:
+  ```json
+  {
+    "name": "Well Delta",
+    "location": "South Texas"
+  }
+  ```
 
-Each reading includes:
-- `pressure` (psi)
-- `temperature` (°F)
-- `flow_rate` (barrels/hour)
-- `timestamp`
-- `status`: a list of alert conditions such as:
-  - `"HIGH PRESSURE"` (if pressure > 230 psi)
-  - `"LOW FLOW"` (if flow_rate < 25)
-  - `"HIGH TEMP"` (if temperature > 115°F)
-  - or `["NORMAL"]` if no anomalies
+- `DELETE /api/wells/<id>`  
+  Removes the well with the specified ID.
 
-### ✅ `GET /api/readings?well_id=1`
-Optionally fetch sensor data from a specific well by ID.
+---
 
-### ✅ `GET /api/alerts`
-Returns simulated sensor readings for wells with **abnormal conditions** (i.e., status ≠ `["NORMAL"]`).
+### 🌡️ Sensor Readings
 
-- Each request triggers new sensor data
-- Abnormal readings are also logged to `alerts.json` for history
+- `GET /api/readings`  
+  Returns real-time randomized sensor data for all wells:
+  - `pressure` (psi)
+  - `temperature` (°F)
+  - `flow_rate` (barrels/hour)
+  - `timestamp`
+  - `status`: list of any anomalies (e.g. `"HIGH PRESSURE"`, `"LOW FLOW"`)
+
+- `GET /api/readings?well_id=<id>`  
+  Returns a single reading for the specified well.
+
+---
+
+### 🚨 Alerts
+
+- `GET /api/alerts`  
+  Returns only the readings where anomalies are detected (`status` ≠ `["NORMAL"]`).  
+  Also logs those alerts to `alerts.json`.
+
+- `GET /api/alert-log`  
+  Returns all saved alerts from `alerts.json`.
+
+- `DELETE /api/alerts`  
+  Clears the alert log (resets `alerts.json` to an empty list).
 
 ---
 
@@ -57,7 +74,7 @@ wellaware-sim/
 │   ├── routes.py           # All API endpoints
 │   ├── generator.py        # Sensor data logic
 │   ├── wells.json          # Mock well data
-│   ├── alerts.json         # Persistent alert log
+│   ├── alerts.json         # Alert log
 ├── run.py                  # Entry point for Flask app
 ├── requirements.txt
 ├── README.md
@@ -94,28 +111,17 @@ python run.py
 - http://localhost:5000/api/wells
 - http://localhost:5000/api/readings
 - http://localhost:5000/api/alerts
-
----
-
-## 🔮 Coming Soon
-
-- `POST /api/wells` to add new test wells dynamically
-- `/api/alert-log` to view full alert history
-- Time-based readings using background jobs (e.g., every 5 seconds)
-- WebSocket stream for live dashboards
+- http://localhost:5000/api/alert-log
 
 ---
 
 ## 🧠 Purpose
 
-This API is a simulated backend service for OilTech dashboards and monitoring platforms. It was built to:
-- Practice realistic REST API design
-- Prototype oilfield software without real hardware
-- Showcase full-stack readiness for oil & energy tech
+This API simulates real-time oilfield equipment and telemetry for testing, development, and integration with full-stack apps. It can replace hardware during prototyping or serve as a mock microservice in your architecture.
 
 ---
 
 ## 📛 Author
 
-Built with ☕ and 🔧 by Victor Valadez  
+Built by Victor Valadez  
 [GitHub](https://github.com/victorvaladez) • Houston-based SWE
