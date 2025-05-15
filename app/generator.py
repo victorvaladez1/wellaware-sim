@@ -8,11 +8,14 @@ def generate_sensor_reading(well_id):
     temperature = round(random.uniform(70, 120), 2)
     flow_rate = round(random.uniform(20, 50), 2)
 
-    status = "NORMAL"
     if pressure > 230:
         status = "HIGH PRESSURE"
     elif flow_rate < 25:
         status = "LOW FLOW"
+    elif temperature > 115:
+        status = "HIGH TEMP"
+    else:
+        status = "NORMAL"
 
     return {
         "well_id": well_id,
