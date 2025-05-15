@@ -95,3 +95,22 @@ def add_well():
 
     return jsonify(new_well), 201
 
+@routes.route("/api/wells/<int:well_id>", methods=["DELETE"])
+def delete_well(well_id):
+    json_path = os.path.join(os.path.dirname(__file__), 'wells.json')
+
+    # Load wells
+    with open(json_path, 'r') as file:
+        wells = json.load(file)
+
+    # Look for well with matching ID
+    updated_wells = [w for w in wells if w["id"] != well_id]
+
+    if len(updated_wells) == len(wells):
+        return jsonify({"error": f"Well with id {well_id} not found"}), 404
+
+    # Save updated list
+    with open(json_path, 'w') as file:
+        json.dump(updated_wells, file, indent=2)
+
+    return jsonify({"message": f"Well with id {well_id} deleted"}), 200
