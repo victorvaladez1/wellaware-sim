@@ -2,7 +2,9 @@
 
 **WellAwareSim** is a backend-only Flask API that simulates oilfield hardware — including oil wells, real-time sensor readings, and fault conditions — to serve as a mock data feed for external applications like dashboards or full-stack OilTech platforms.
 
-This project mimics real-world industrial equipment behavior and supports CRUD operations for wells, real-time anomaly detection, and alert logging.
+This project mimics real-world industrial equipment behavior and supports CRUD operations for wells, real-time anomaly detection, alert logging, and more.
+
+Live deployment: **[wellaware-sim.onrender.com](https://wellaware-sim.onrender.com)**
 
 ---
 
@@ -10,12 +12,25 @@ This project mimics real-world industrial equipment behavior and supports CRUD o
 
 - **Python 3.9+**
 - **Flask** (REST API)
+- **gunicorn** (production WSGI server)
 - **JSON files** as mock storage
+- Deployed using **Render**
 - No frontend — this API acts as a simulated external system
 
 ---
 
 ## 🚀 API Endpoints
+
+### 🔗 Root
+
+- `GET /`  
+  Returns a welcome message.  
+  Example response:
+  ```json
+  { "message": "Welcome to the WellAwareSim API!" }
+  ```
+
+---
 
 ### 🛢️ Wells
 
@@ -24,7 +39,6 @@ This project mimics real-world industrial equipment behavior and supports CRUD o
 
 - `POST /api/wells`  
   Adds a new well. Expects:
-
   ```json
   {
     "name": "Well Delta",
@@ -41,7 +55,6 @@ This project mimics real-world industrial equipment behavior and supports CRUD o
 
 - `GET /api/readings`  
   Returns real-time randomized sensor data for all wells:
-
   - `pressure` (psi)
   - `temperature` (°F)
   - `flow_rate` (barrels/hour)
@@ -79,12 +92,13 @@ wellaware-sim/
 │   ├── alerts.json         # Alert log
 ├── run.py                  # Entry point for Flask app
 ├── requirements.txt
+├── Procfile                # Deployment start command for Render
 ├── README.md
 ```
 
 ---
 
-## 📦 Setup Instructions
+## 📦 Setup Instructions (Local)
 
 1. Clone the repo:
 
@@ -97,7 +111,7 @@ cd wellaware-sim
 
 ```bash
 python -m venv venv
-.env\Scriptsctivate         # Windows
+venv\Scripts\activate         # Windows
 # source venv/bin/activate     # macOS/Linux
 ```
 
@@ -107,18 +121,29 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 
-4. Run the app:
+4. Run the app locally:
 
 ```bash
 python run.py
 ```
 
-5. Test endpoints in browser or Postman:
+5. Test endpoints locally:
 
+- http://localhost:5000/
 - http://localhost:5000/api/wells
 - http://localhost:5000/api/readings
 - http://localhost:5000/api/alerts
 - http://localhost:5000/api/alert-log
+
+---
+
+## 🌐 Live Testing (Deployed on Render)
+
+- https://wellaware-sim.onrender.com/
+- https://wellaware-sim.onrender.com/api/wells
+- https://wellaware-sim.onrender.com/api/readings
+- https://wellaware-sim.onrender.com/api/alerts
+- https://wellaware-sim.onrender.com/api/alert-log
 
 ---
 
@@ -130,5 +155,5 @@ This API simulates real-time oilfield equipment and telemetry for testing, devel
 
 ## 📛 Author
 
-Built by Victor Valadez  
-[GitHub](https://github.com/victorvaladez) • Houston-based SWE
+Built by **Victor Valadez**  
+[GitHub](https://github.com/victorvaladez1) • Houston-based SWE
