@@ -24,6 +24,7 @@ This project mimics real-world industrial equipment behavior and supports CRUD o
 
 - `POST /api/wells`  
   Adds a new well. Expects:
+
   ```json
   {
     "name": "Well Delta",
@@ -40,6 +41,7 @@ This project mimics real-world industrial equipment behavior and supports CRUD o
 
 - `GET /api/readings`  
   Returns real-time randomized sensor data for all wells:
+
   - `pressure` (psi)
   - `temperature` (°F)
   - `flow_rate` (barrels/hour)
@@ -85,12 +87,14 @@ wellaware-sim/
 ## 📦 Setup Instructions
 
 1. Clone the repo:
+
 ```bash
 git clone https://github.com/your-username/wellaware-sim.git
 cd wellaware-sim
 ```
 
 2. Create and activate a virtual environment:
+
 ```bash
 python -m venv venv
 .env\Scriptsctivate         # Windows
@@ -98,16 +102,19 @@ python -m venv venv
 ```
 
 3. Install dependencies:
+
 ```bash
 pip install -r requirements.txt
 ```
 
 4. Run the app:
+
 ```bash
 python run.py
 ```
 
 5. Test endpoints in browser or Postman:
+
 - http://localhost:5000/api/wells
 - http://localhost:5000/api/readings
 - http://localhost:5000/api/alerts
