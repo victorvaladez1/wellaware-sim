@@ -5,9 +5,8 @@ import os
 import json
 
 routes = Blueprint("routes", __name__)
-bp = Blueprint("api", __name__)
 
-@bp.route("/", methods=["GET"])
+@routes.route("/", methods=["GET"])
 def root():
     return jsonify({"message": "Welcome to the WellAwareSim API!"})
 
